@@ -17,8 +17,6 @@ const Footer = ({ title }) => {
       <span>
         <i className='mx-1 animate-pulse fas fa-heart' />
         <a
-          // href={siteConfig('LINK')}
-          {/* hard-coded url, main deployment */}
           href='https://camelliav.netlify.app/'
           className='underline font-bold  dark:text-gray-300 '>
           {siteConfig('AUTHOR')}
@@ -37,11 +35,10 @@ const Footer = ({ title }) => {
         <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>
           {title} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
         </h1>
-        {/* add icons */}
         <div className='justify-center'>
-          <a href= "https://github.com/CamelliaV"><img src="https://img.icons8.com/material-outlined/30/000000/github.png"/></a>
-          <a href= "mailto:cameliascript@gmail.com"><img src="https://img.icons8.com/material-outlined/30/000000/email.png"/></a>
-          <a href= "https://camelliav.netlify.app/"><img src="https://img.icons8.com/material-outlined/30/000000/idea.png"/></a>
+          <a href="https://github.com/CamelliaV"><img src="https://img.icons8.com/material-outlined/30/000000/github.png"/></a>
+          <a href="mailto:cameliascript@gmail.com"><img src="https://img.icons8.com/material-outlined/30/000000/email.png"/></a>
+          <a href="https://camelliav.netlify.app/"><img src="https://img.icons8.com/material-outlined/30/000000/idea.png"/></a>
         </div>
       </span>
       <br />
