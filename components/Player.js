@@ -71,10 +71,8 @@ const Player = () => {
           fixed='true'
           type='playlist'
           preload='auto'
-          api={siteConfig(
-            'MUSIC_PLAYER_METING_API',
-            'https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r'
-          )}
+          lrc-type={siteConfig('MUSIC_PLAYER_METING_LRC_TYPE')}
+          api='https://api.injahow.cn/meting/?server=netease&type=playlist&id=12927716304'
           autoplay={autoPlay}
           order={siteConfig('MUSIC_PLAYER_ORDER')}
           server={siteConfig('MUSIC_PLAYER_METING_SERVER')}
