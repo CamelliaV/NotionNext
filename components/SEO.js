@@ -109,7 +109,12 @@ const SEO = props => {
       />
       <meta name='robots' content='follow, index' />
       <meta charSet='UTF-8' />
-      <meta name="google-site-verification" content="VS4miateQHOJQMnFGNtMwNXK2CZJ0vaEhHjMwLwRRLQ" />
+      {SEO_GOOGLE_SITE_VERIFICATION && (
+        <meta
+          name='google-site-verification'
+          content={SEO_GOOGLE_SITE_VERIFICATION}
+        />
+      )}
       {SEO_BAIDU_SITE_VERIFICATION && (
         <meta
           name='baidu-site-verification'
