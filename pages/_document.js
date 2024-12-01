@@ -47,6 +47,7 @@ class MyDocument extends Document {
             name='google-site-verification'
             content='VS4miateQHOJQMnFGNtMwNXK2CZJ0vaEhHjMwLwRRLQ'
           />
+          <meta name="baidu-site-verification" content="codeva-j8vCdlNKD8" />
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
             <>
