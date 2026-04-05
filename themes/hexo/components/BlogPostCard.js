@@ -4,7 +4,13 @@ import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
 
-const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
+const BlogPostCard = ({
+  index,
+  post,
+  showSummary,
+  siteInfo,
+  disableAnimation = false
+}) => {
   const showPreview =
     siteConfig('HEXO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   if (
@@ -18,6 +24,15 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     siteConfig('HEXO_POST_LIST_COVER', null, CONFIG) &&
     post?.pageCoverThumbnail &&
     !showPreview
+  const aosProps = disableAnimation
+    ? {}
+    : {
+        'data-aos': 'fade-up',
+        'data-aos-easing': 'ease-in-out',
+        'data-aos-duration': '500',
+        'data-aos-once': 'true',
+        'data-aos-anchor-placement': 'top-bottom'
+      }
   //   const delay = (index % 2) * 200
 
   return (
@@ -25,11 +40,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       className={`${siteConfig('HEXO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`}>
       <div
         key={post.id}
-        data-aos='fade-up'
-        data-aos-easing='ease-in-out'
-        data-aos-duration='500'
-        data-aos-once='false'
-        data-aos-anchor-placement='top-bottom'
+        {...aosProps}
         id='blog-post-card'
         className={`group md:h-56 w-full flex justify-between md:flex-row flex-col-reverse ${siteConfig('HEXO_POST_LIST_IMG_CROSSOVER', null, CONFIG) && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
                     overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>

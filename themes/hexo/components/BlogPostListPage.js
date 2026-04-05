@@ -1,8 +1,8 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationNumber from './PaginationNumber'
+import SortablePostList from './SortablePostList'
 
 /**
  * 文章列表分页表格
@@ -23,16 +23,11 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return (
       <div id='container' className='w-full'>
         {/* 文章列表 */}
-        <div className='space-y-6 px-2'>
-          {posts?.map(post => (
-            <BlogPostCard
-              index={posts.indexOf(post)}
-              key={post.id}
-              post={post}
-              siteInfo={siteInfo}
-            />
-          ))}
-        </div>
+        <SortablePostList
+          posts={posts}
+          siteInfo={siteInfo}
+          storageScope='page'
+        />
         {showPagination && (
           <PaginationNumber page={page} totalPage={totalPage} />
         )}

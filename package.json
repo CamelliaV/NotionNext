@@ -16,7 +16,7 @@
     "url": "http://tangly1024.com"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/prepare-dev.js && next dev",
     "build": "cross-env BUILD_MODE=true next build",
     "start": "next start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
@@ -49,6 +49,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@chenglou/pretext": "0.0.4",
     "@clerk/localizations": "^3.17.1",
     "@clerk/nextjs": "^5.7.5",
     "@headlessui/react": "^1.7.19",

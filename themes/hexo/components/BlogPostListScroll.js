@@ -3,8 +3,8 @@ import { useGlobal } from '@/lib/global'
 import { getListByPage } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
-import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
+import SortablePostList from './SortablePostList'
 
 /**
  * 博客列表滚动分页
@@ -67,16 +67,12 @@ const BlogPostListScroll = ({
     return (
       <div id='container' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
-        <div className='space-y-6 px-2'>
-          {postsToShow.map(post => (
-            <BlogPostCard
-              key={post.id}
-              post={post}
-              showSummary={showSummary}
-              siteInfo={siteInfo}
-            />
-          ))}
-        </div>
+        <SortablePostList
+          posts={postsToShow}
+          showSummary={showSummary}
+          siteInfo={siteInfo}
+          storageScope='scroll'
+        />
 
         <div>
           <div
