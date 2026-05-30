@@ -1,6 +1,10 @@
 import { siteConfig } from '@/lib/config'
 import { convertInnerUrl } from '@/lib/db/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import {
+  resolveMusicPlayerTheme,
+  shouldRenderGlobalMusicPlayer
+} from '@/lib/utils/musicPlayer'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -164,6 +168,16 @@ const ExternalPlugin = props => {
   }
 
   const router = useRouter()
+  const currentTheme = resolveMusicPlayerTheme({
+    resolvedTheme: props.resolvedTheme,
+    router,
+    fallbackTheme: siteConfig('THEME', null, NOTION_CONFIG)
+  })
+  const renderGlobalMusicPlayer = shouldRenderGlobalMusicPlayer({
+    enabled: MUSIC_PLAYER,
+    theme: currentTheme
+  })
+
   useEffect(() => {
     // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
@@ -207,7 +221,7 @@ const ExternalPlugin = props => {
       {FIREWORKS && <Fireworks />}
       {SAKURA && <Sakura />}
       {STARRY_SKY && <StarrySky />}
-      {MUSIC_PLAYER && <MusicPlayer />}
+      {renderGlobalMusicPlayer && <MusicPlayer />}
       {NEST && <Nest />}
       {FLUTTERINGRIBBON && <FlutteringRibbon />}
       {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}

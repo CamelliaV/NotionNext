@@ -29,11 +29,18 @@ export const buildMenuItems = ({ customNav, customMenu }) => {
     }
   ]
 
+  const normalizeIcon = icon => {
+    if (!icon || typeof icon !== 'string') {
+      return undefined
+    }
+    return /\s/.test(icon) || icon.includes('-') ? icon : undefined
+  }
+
   const normalizeMenuItem = link => ({
     name: link?.name || link?.title || '',
     path: link?.href || link?.to || link?.slug || '/',
     target: link?.target,
-    icon: link?.icon,
+    icon: normalizeIcon(link?.icon || link?.titleIcon || link?.pageIcon),
     show: link?.show,
     subMenus: Array.isArray(link?.subMenus)
       ? link.subMenus.map(normalizeMenuItem)

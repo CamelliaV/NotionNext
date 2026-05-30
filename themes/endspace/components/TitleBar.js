@@ -1,21 +1,23 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
+import { EndspaceImage } from './EndspaceImage'
 
 /**
  * TitleBar Component - Endfield Style (Light Industrial)
  */
 export const TitleBar = ({ post }) => {
 
-  const marqueeText = siteConfig('ENDSPACE_BANNER_WATERMARK_TEXT', 'CLOUD09_SPACE', CONFIG)
+  const marqueeText = siteConfig('ENDSPACE_BANNER_WATERMARK_TEXT', 'CamelliaV の BLOG', CONFIG)
 
   return (
     <div className="relative py-20 md:py-28 border-b-2 border-[var(--endspace-border-base)] overflow-hidden bg-[var(--endspace-bg-base)]">
       {/* Post Cover Image Background - shown on article pages */}
       {post && post.pageCoverThumbnail && (
         <div className="absolute inset-0">
-          <img 
+          <EndspaceImage
             src={post.pageCoverThumbnail}
             alt={post.title || 'Cover'}
+            wrapperClassName="h-full w-full"
             className="w-full h-full object-cover"
           />
           {/* Dark overlay for better contrast */}

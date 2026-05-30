@@ -1,7 +1,8 @@
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
-import CONFIG from '../config'
 import { IconArrowRight } from '@tabler/icons-react'
+import CONFIG from '../config'
+import { EndspaceImage } from './EndspaceImage'
 
 /**
  * BlogPostCard Component - Minimalist Light Industrial
@@ -14,72 +15,67 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
 
   return (
     <SmartLink href={`/${post.slug}`}>
-      <article className={`endspace-frame group mb-6 flex flex-col overflow-hidden relative transition-all duration-300`}>
-        
-        {/* Cover Image - Top (Full Width) */}
+      <article className='endspace-frame group relative mb-6 flex flex-col overflow-hidden transition-all duration-300'>
         {hasCover && (
-          <div className="w-full aspect-video flex-shrink-0 relative overflow-hidden z-10 bg-black/5">
-            <img
-              src={post.pageCoverThumbnail}
-              alt={post.title}
-              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-            />
-            {/* Minimalist marker overlay */}
-            <div className="absolute top-3 right-3 w-2 h-2 bg-[var(--endspace-accent-yellow)] opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
+          <EndspaceImage
+            wrapperClassName='w-full aspect-video flex-shrink-0 z-10 bg-black/5'
+            src={post.pageCoverThumbnail}
+            alt={post.title}
+            className='h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-105'
+          >
+            <div className='absolute right-3 top-3 z-20 h-2 w-2 bg-[var(--endspace-accent-yellow)] opacity-0 transition-opacity group-hover:opacity-100' />
+          </EndspaceImage>
         )}
 
-        {/* Content - Bottom */}
-        <div className={`flex-1 flex flex-col justify-center relative z-10 p-5 md:p-6 overflow-hidden`}>
-          
-          {/* Hover Effect: Yellow Swoosh Background (Now confined to text area) */}
-          <div className="absolute inset-0 bg-[#FBFB45] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
-          
-          {/* Hover Effect: Horizontal Black Bar (Top of text area) */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+        <div className='relative z-10 flex flex-1 flex-col justify-center overflow-hidden p-5 md:p-6'>
+          <div className='absolute inset-0 z-0 origin-left scale-x-0 bg-[#FBFB45] transition-transform duration-300 ease-out group-hover:scale-x-100' />
+          <div className='absolute left-0 right-0 top-0 z-20 h-1.5 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
 
-          {/* Wrapper for content to ensure it sits above the yellow background */}
-          <div className="relative z-10">
-          
-          {/* Top Meta */}
-          <div className="flex items-center gap-3 text-xs font-mono text-[var(--endspace-text-muted)] mb-3 group-hover:text-black/60 transition-colors">
-             <span className="text-[var(--endspace-text-primary)] font-bold group-hover:text-black transition-colors">
-                 {post.publishDay}
-             </span>
-             <span className="w-px h-3 bg-[var(--endspace-border-base)] group-hover:bg-black/30 transition-colors" />
-             {post.category && (
-                <span className="tracking-wider">{post.category.toUpperCase()}</span>
-             )}
-          </div>
+          <div className='relative z-10'>
+            <div className='mb-3 flex items-center gap-3 font-mono text-xs text-[var(--endspace-text-muted)] transition-colors group-hover:text-black/60'>
+              <span className='font-bold text-[var(--endspace-text-primary)] transition-colors group-hover:text-black'>
+                {post.publishDay}
+              </span>
+              <span className='h-3 w-px bg-[var(--endspace-border-base)] transition-colors group-hover:bg-black/30' />
+              {post.category && (
+                <span className='tracking-wider'>
+                  {post.category.toUpperCase()}
+                </span>
+              )}
+            </div>
 
-          {/* Title */}
-          <h2 className="text-2xl md:text-3xl font-black text-[var(--endspace-text-primary)] mb-4 leading-tight group-hover:text-black transition-colors">
-            {post.title}
-          </h2>
+            <h2 className='mb-4 text-2xl font-black leading-tight text-[var(--endspace-text-primary)] transition-colors group-hover:text-black md:text-3xl'>
+              {post.title}
+            </h2>
 
-          {/* Summary */}
-          {showSummary && showPreview && post.summary && (
-            <p className="text-[var(--endspace-text-secondary)] text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-6 font-medium group-hover:text-black/70 transition-colors">
-              {post.summary}
-            </p>
-          )}
+            {showSummary && showPreview && post.summary && (
+              <p className='mb-6 line-clamp-2 text-sm font-medium leading-relaxed text-[var(--endspace-text-secondary)] transition-colors group-hover:text-black/70 md:line-clamp-3'>
+                {post.summary}
+              </p>
+            )}
 
-          {/* Footer / Read More */}
-          <div className="mt-auto flex items-center justify-between">
-            <div className="flex gap-2">
-                {post.tags?.slice(0,3).map(tag => (
-                    <span key={tag} className="text-[10px] text-[var(--endspace-text-muted)] bg-[var(--endspace-bg-secondary)] px-1.5 py-0.5 rounded group-hover:bg-black group-hover:text-white transition-colors">
-                        #{tag}
-                    </span>
+            <div className='mt-auto flex items-center justify-between'>
+              <div className='flex gap-2'>
+                {post.tags?.slice(0, 3).map(tag => (
+                  <span
+                    key={tag}
+                    className='rounded bg-[var(--endspace-bg-secondary)] px-1.5 py-0.5 text-[10px] text-[var(--endspace-text-muted)] transition-colors group-hover:bg-black group-hover:text-white'
+                  >
+                    #{tag}
+                  </span>
                 ))}
-            </div>
-            
-            <div className="flex items-center gap-2 text-[var(--endspace-text-primary)] text-xs font-bold uppercase tracking-wider group-hover:gap-3 transition-all group-hover:text-black">
+              </div>
+
+              <div className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--endspace-text-primary)] transition-all group-hover:gap-3 group-hover:text-black'>
                 <span>Access</span>
-                <IconArrowRight size={12} stroke={2} className="group-hover:translate-x-1 transition-transform group-hover:text-black" />
+                <IconArrowRight
+                  size={12}
+                  stroke={2}
+                  className='transition-transform group-hover:translate-x-1 group-hover:text-black'
+                />
+              </div>
             </div>
           </div>
-          </div> {/* End relative z-10 wrapper */}
         </div>
       </article>
     </SmartLink>

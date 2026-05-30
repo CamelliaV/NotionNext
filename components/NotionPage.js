@@ -2,6 +2,7 @@ import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/db/notion/mapImage'
 import NotionLink from '@/components/NotionLink'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { bindNotionImageSkeletons } from '@/lib/utils/notionImageSkeleton'
 import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
@@ -30,6 +31,10 @@ const NotionPage = ({ post, className }) => {
 
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
+    const articleRoot =
+      document.getElementById('notion-article') || document.body
+    const cleanupImageSkeletons = bindNotionImageSkeletons(articleRoot)
+
     // 相册视图点击禁止跳转，只能放大查看图片
     if (POST_DISABLE_GALLERY_CLICK) {
       if (!zoomRef.current && isBrowser) {
@@ -50,10 +55,9 @@ const NotionPage = ({ post, className }) => {
     /**
      * 放大查看图片时替换成高清图像
      */
-    const articleRoot =
-      document.getElementById('notion-article') || document.body
     const hasAnyImage = Boolean(articleRoot.querySelector('img'))
     if (!hasAnyImage) {
+      cleanupImageSkeletons()
       return
     }
 
@@ -88,8 +92,14 @@ const NotionPage = ({ post, className }) => {
 
     return () => {
       observer.disconnect()
+      cleanupImageSkeletons()
     }
-  }, [post])
+  }, [
+    IMAGE_ZOOM_IN_WIDTH,
+    POST_DISABLE_DATABASE_CLICK,
+    POST_DISABLE_GALLERY_CLICK,
+    post
+  ])
 
   useEffect(() => {
     // Spoiler文本功能
@@ -104,7 +114,7 @@ const NotionPage = ({ post, className }) => {
         })
       })
     }
-  }, [post])
+  }, [post, SPOILER_TEXT_TAG])
 
   // const cleanBlockMap = cleanBlocksWithWarn(post?.blockMap);
   // console.log('NotionPage render with post:', post);

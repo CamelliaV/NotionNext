@@ -1630,9 +1630,135 @@ code[class*='language-'] {
   }
 }
 
+.lazy-image-wrapper,
+.notion-asset-wrapper-image,
+.lazy-image-placeholder,
+.endspace-image-skeleton {
+  --notion-image-skeleton-base: rgba(226, 232, 240, 0.72);
+  --notion-image-skeleton-highlight: rgba(248, 250, 252, 0.92);
+  --notion-image-skeleton-duration: 1.2s;
+  --notion-image-skeleton-animation: notion-image-skeleton-shimmer;
+  --notion-image-skeleton-rose-color: rgba(251, 251, 70, 0.32);
+  --notion-image-skeleton-rose-trace-color: rgba(255, 255, 190, 0.96);
+  --notion-image-skeleton-rose-angle: 0deg;
+  --notion-image-skeleton-rose-size: min(34%, 168px);
+  --notion-image-skeleton-rose-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M78.8 50.0 L78.7 50.8 L78.2 51.5 L77.4 52.2 L76.2 52.8 L74.8 53.3 L73.1 53.7 L71.1 53.9 L68.9 54.0 L66.5 54.0 L63.9 53.7 L61.3 53.3 L58.5 52.8 L55.7 52.0 L52.8 51.1 L50.0 50.0 L47.2 48.8 L44.6 47.4 L42.1 46.0 L39.7 44.4 L37.5 42.8 L35.5 41.1 L33.8 39.5 L32.3 37.9 L31.1 36.3 L30.2 34.8 L29.5 33.4 L29.1 32.2 L29.0 31.1 L29.2 30.2 L29.6 29.6 L30.2 29.2 L31.1 29.0 L32.2 29.1 L33.4 29.5 L34.8 30.2 L36.3 31.1 L37.9 32.3 L39.5 33.8 L41.1 35.5 L42.8 37.5 L44.4 39.7 L46.0 42.1 L47.4 44.6 L48.8 47.2 L50.0 50.0 L51.1 52.8 L52.0 55.7 L52.8 58.5 L53.3 61.3 L53.7 63.9 L54.0 66.5 L54.0 68.9 L53.9 71.1 L53.7 73.1 L53.3 74.8 L52.8 76.2 L52.2 77.4 L51.5 78.2 L50.8 78.7 L50.0 78.8 L49.2 78.7 L48.5 78.2 L47.8 77.4 L47.2 76.2 L46.7 74.8 L46.3 73.1 L46.1 71.1 L46.0 68.9 L46.0 66.5 L46.3 63.9 L46.7 61.3 L47.2 58.5 L48.0 55.7 L48.9 52.8 L50.0 50.0 L51.2 47.2 L52.6 44.6 L54.0 42.1 L55.6 39.7 L57.2 37.5 L58.9 35.5 L60.5 33.8 L62.1 32.3 L63.7 31.1 L65.2 30.2 L66.6 29.5 L67.8 29.1 L68.9 29.0 L69.8 29.2 L70.4 29.6 L70.8 30.2 L71.0 31.1 L70.9 32.2 L70.5 33.4 L69.8 34.8 L68.9 36.3 L67.7 37.9 L66.2 39.5 L64.5 41.1 L62.5 42.8 L60.3 44.4 L57.9 46.0 L55.4 47.4 L52.8 48.8 L50.0 50.0 L47.2 51.1 L44.3 52.0 L41.5 52.8 L38.7 53.3 L36.1 53.7 L33.5 54.0 L31.1 54.0 L28.9 53.9 L26.9 53.7 L25.2 53.3 L23.8 52.8 L22.6 52.2 L21.8 51.5 L21.3 50.8 L21.2 50.0 L21.3 49.2 L21.8 48.5 L22.6 47.8 L23.8 47.2 L25.2 46.7 L26.9 46.3 L28.9 46.1 L31.1 46.0 L33.5 46.0 L36.1 46.3 L38.7 46.7 L41.5 47.2 L44.3 48.0 L47.2 48.9 L50.0 50.0 L52.8 51.2 L55.4 52.6 L57.9 54.0 L60.3 55.6 L62.5 57.2 L64.5 58.9 L66.2 60.5 L67.7 62.1 L68.9 63.7 L69.8 65.2 L70.5 66.6 L70.9 67.8 L71.0 68.9 L70.8 69.8 L70.4 70.4 L69.8 70.8 L68.9 71.0 L67.8 70.9 L66.6 70.5 L65.2 69.8 L63.7 68.9 L62.1 67.7 L60.5 66.2 L58.9 64.5 L57.2 62.5 L55.6 60.3 L54.0 57.9 L52.6 55.4 L51.2 52.8 L50.0 50.0 L48.9 47.2 L48.0 44.3 L47.2 41.5 L46.7 38.7 L46.3 36.1 L46.0 33.5 L46.0 31.1 L46.1 28.9 L46.3 26.9 L46.7 25.2 L47.2 23.8 L47.8 22.6 L48.5 21.8 L49.2 21.3 L50.0 21.2 L50.8 21.3 L51.5 21.8 L52.2 22.6 L52.8 23.8 L53.3 25.2 L53.7 26.9 L53.9 28.9 L54.0 31.1 L54.0 33.5 L53.7 36.1 L53.3 38.7 L52.8 41.5 L52.0 44.3 L51.1 47.2 L50.0 50.0 L48.8 52.8 L47.4 55.4 L46.0 57.9 L44.4 60.3 L42.8 62.5 L41.1 64.5 L39.5 66.2 L37.9 67.7 L36.3 68.9 L34.8 69.8 L33.4 70.5 L32.2 70.9 L31.1 71.0 L30.2 70.8 L29.6 70.4 L29.2 69.8 L29.0 68.9 L29.1 67.8 L29.5 66.6 L30.2 65.2 L31.1 63.7 L32.3 62.1 L33.8 60.5 L35.5 58.9 L37.5 57.2 L39.7 55.6 L42.1 54.0 L44.6 52.6 L47.2 51.2 L50.0 50.0 L52.8 48.9 L55.7 48.0 L58.5 47.2 L61.3 46.7 L63.9 46.3 L66.5 46.0 L68.9 46.0 L71.1 46.1 L73.1 46.3 L74.8 46.7 L76.2 47.2 L77.4 47.8 L78.2 48.5 L78.7 49.2 L78.8 50.0' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --notion-image-skeleton-background: linear-gradient(
+    90deg,
+    var(--notion-image-skeleton-base) 0%,
+    var(--notion-image-skeleton-highlight) 45%,
+    var(--notion-image-skeleton-base) 90%
+  );
+}
+
+@property --notion-image-skeleton-rose-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .lazy-image-wrapper {
   position: relative;
   overflow: hidden;
+  background: var(--notion-image-skeleton-base);
+}
+
+.endspace-image-skeleton {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--notion-image-skeleton-base);
+}
+
+.notion-asset-wrapper-image .lazy-image-wrapper,
+.notion-asset-wrapper-image > div,
+.notion-asset-wrapper-image .lazy-image-placeholder {
+  min-height: 220px;
+}
+
+.notion-asset-wrapper-image {
+  overflow: hidden;
+}
+
+.notion-asset-wrapper-image.notion-image-skeleton-host {
+  position: relative;
+  isolation: isolate;
+  background: var(--notion-image-skeleton-base);
+}
+
+.lazy-image-wrapper:not(.lazy-image-loaded)::before,
+.endspace-image-skeleton:not(.lazy-image-loaded)::before,
+.notion-asset-wrapper-image.notion-image-loading::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--notion-image-skeleton-background);
+  background-size: 240% 100%;
+  animation: var(--notion-image-skeleton-animation)
+    var(--notion-image-skeleton-duration) ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+
+html.dark .lazy-image-wrapper,
+html.dark .notion-asset-wrapper-image,
+html.dark .lazy-image-placeholder,
+html.dark .endspace-image-skeleton {
+  --notion-image-skeleton-base: rgba(51, 65, 85, 0.65);
+  --notion-image-skeleton-highlight: rgba(100, 116, 139, 0.78);
+}
+
+.lazy-image-wrapper:not(.lazy-image-loaded)::after,
+.endspace-image-skeleton:not(.lazy-image-loaded)::after,
+.notion-asset-wrapper-image.notion-image-loading::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: var(--notion-image-skeleton-rose-size);
+  aspect-ratio: 1;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from var(--notion-image-skeleton-rose-angle),
+      transparent 0deg,
+      transparent 248deg,
+      rgba(255, 255, 190, 0.08) 266deg,
+      var(--notion-image-skeleton-rose-trace-color) 286deg,
+      rgba(255, 255, 190, 0.14) 304deg,
+      transparent 328deg,
+      transparent 360deg
+    ),
+    var(--notion-image-skeleton-rose-color);
+  filter: drop-shadow(0 0 12px rgba(251, 251, 70, 0.22));
+  opacity: 0.58;
+  transform: translate(-50%, -50%) rotate(0deg) scale(0.92);
+  transform-origin: center;
+  -webkit-mask: var(--notion-image-skeleton-rose-mask) center / contain no-repeat;
+  mask: var(--notion-image-skeleton-rose-mask) center / contain no-repeat;
+  animation:
+    notion-image-skeleton-rose-spin 28s linear infinite,
+    notion-image-skeleton-rose-pulse 4.5s ease-in-out infinite,
+    notion-image-skeleton-rose-trace 2.4s linear infinite;
+}
+
+.lazy-image-wrapper.lazy-image-loaded,
+.endspace-image-skeleton.lazy-image-loaded,
+.notion-asset-wrapper-image.notion-image-loaded {
+  background: transparent;
+}
+
+.lazy-image-wrapper.lazy-image-loaded::before,
+.lazy-image-wrapper.lazy-image-loaded::after,
+.endspace-image-skeleton.lazy-image-loaded::before,
+.endspace-image-skeleton.lazy-image-loaded::after,
+.notion-asset-wrapper-image.notion-image-loaded::before,
+.notion-asset-wrapper-image.notion-image-loaded::after {
+  content: none;
+  animation: none;
 }
 
 .lazy-image-wrapper img {
@@ -1644,6 +1770,19 @@ code[class*='language-'] {
   max-height: 100%;
   min-width: 100%;
   min-height: 100%;
+  z-index: 1;
+}
+
+.endspace-image-skeleton > img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  opacity: 0;
+  transition: opacity 360ms ease-out;
+}
+
+.endspace-image-skeleton.lazy-image-loaded > img {
+  opacity: 1;
 }
 
 .lazy-image-preview {
@@ -1664,6 +1803,80 @@ code[class*='language-'] {
   opacity: 0;
   transition: opacity 400ms ease-out !important;
   will-change: opacity;
+}
+
+.notion-image-skeleton-pulse .lazy-image-wrapper,
+.lazy-image-wrapper.notion-image-skeleton-pulse {
+  --notion-image-skeleton-animation: notion-image-skeleton-pulse;
+  --notion-image-skeleton-duration: 1.4s;
+}
+
+.notion-image-skeleton-none .lazy-image-wrapper,
+.lazy-image-wrapper.notion-image-skeleton-none {
+  --notion-image-skeleton-animation: none;
+}
+
+.lazy-image-placeholder {
+  position: relative;
+  background: var(--notion-image-skeleton-base);
+}
+
+.notion-asset-wrapper-image img.medium-zoom-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+@keyframes notion-image-skeleton-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@keyframes notion-image-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes notion-image-skeleton-rose-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg) scale(0.92);
+  }
+}
+
+@keyframes notion-image-skeleton-rose-pulse {
+  0%,
+  100% {
+    opacity: 0.38;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@keyframes notion-image-skeleton-rose-trace {
+  to {
+    --notion-image-skeleton-rose-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lazy-image-wrapper:not(.lazy-image-loaded)::before,
+  .lazy-image-wrapper:not(.lazy-image-loaded)::after,
+  .endspace-image-skeleton:not(.lazy-image-loaded)::before,
+  .endspace-image-skeleton:not(.lazy-image-loaded)::after,
+  .notion-asset-wrapper-image.notion-image-loading::before,
+  .notion-asset-wrapper-image.notion-image-loading::after {
+    animation: none;
+  }
 }
 
 .lazy-image-real.medium-zoom-image {

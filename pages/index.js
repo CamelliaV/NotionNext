@@ -10,6 +10,7 @@ import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 import pLimit from 'p-limit'
 import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
+import { resolveSiteThemeWithSource } from '@/lib/utils/themeResolver'
 
 /**
  * 首页布局
@@ -32,8 +33,10 @@ export async function getStaticProps(req) {
   if (process.env.NODE_ENV === 'development') {
     const configTheme = BLOG.THEME
     const notionTheme = props?.NOTION_CONFIG?.THEME || null
-    const finalTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
-    const source = notionTheme ? 'notion:config' : 'blog/env:config'
+    const { source, theme: finalTheme } = resolveSiteThemeWithSource({
+      notionTheme,
+      configTheme
+    })
     console.log(
       '[ThemeResolver][server-static-props]',
       JSON.stringify({

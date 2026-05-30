@@ -3,8 +3,8 @@ import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 
 // core styles shared by all of react-notion-x (required)
-import '@/styles/notion.css' //  重写部分notion样式
 import 'react-notion-x/src/styles.css' // 原版的react-notion-x
+import '@/styles/notion.css' //  重写部分notion样式
 
 import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'
@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
 import ErrorHandler from '@/lib/utils/errorHandler'
+import { resolveSiteThemeWithSource } from '@/lib/utils/themeResolver'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
@@ -45,16 +46,16 @@ const MyApp = ({ Component, pageProps }) => {
   const queryTheme = getQueryParam(route.asPath, 'theme')
   const notionTheme = pageProps?.NOTION_CONFIG?.THEME
   const configTheme = BLOG.THEME
-  const theme = useMemo(() => {
-    return queryTheme || notionTheme || configTheme
+  const themeResolution = useMemo(() => {
+    return resolveSiteThemeWithSource({
+      queryTheme,
+      notionTheme,
+      configTheme
+    })
   }, [queryTheme, notionTheme, configTheme])
+  const theme = themeResolution.theme
 
   useEffect(() => {
-    const source = queryTheme
-      ? 'url:theme'
-      : notionTheme
-        ? 'notion:config'
-        : 'blog/env:config'
     console.log(
       '[ThemeResolver][runtime-final]',
       JSON.stringify(
@@ -64,13 +65,13 @@ const MyApp = ({ Component, pageProps }) => {
           notionTheme: notionTheme || null,
           queryTheme: queryTheme || null,
           finalTheme: theme,
-          source
+          source: themeResolution.source
         },
         null,
         2
       )
     )
-  }, [configTheme, notionTheme, queryTheme, theme])
+  }, [configTheme, notionTheme, queryTheme, theme, themeResolution.source])
 
   // 整体布局
   const GLayout = useCallback(
@@ -84,12 +85,12 @@ const MyApp = ({ Component, pageProps }) => {
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
   const content = (
     <AppErrorBoundary>
-      <GlobalContextProvider {...pageProps}>
+      <GlobalContextProvider {...pageProps} resolvedTheme={theme}>
         <GLayout {...pageProps}>
           <SEO {...pageProps} />
           <Component {...pageProps} />
         </GLayout>
-        <ExternalPlugins {...pageProps} />
+        <ExternalPlugins {...pageProps} resolvedTheme={theme} />
       </GlobalContextProvider>
     </AppErrorBoundary>
   )

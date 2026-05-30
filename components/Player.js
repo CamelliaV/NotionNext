@@ -23,6 +23,10 @@ const Player = () => {
     'MUSIC_PLAYER_METING_CDN_URL',
     'https://cdnjs.cloudflare.com/ajax/libs/meting/2.0.1/Meting.min.js'
   )
+  const musicMetingApi = siteConfig(
+    'MUSIC_PLAYER_METING_API',
+    'https://api.injahow.cn/meting/?server=netease&type=playlist&id=12927716304'
+  )
 
   const initMusicPlayer = async () => {
     if (!musicPlayerEnable) {
@@ -72,7 +76,7 @@ const Player = () => {
           type='playlist'
           preload='auto'
           lrc-type={siteConfig('MUSIC_PLAYER_METING_LRC_TYPE')}
-          api='https://api.injahow.cn/meting/?server=netease&type=playlist&id=12927716304'
+          api={musicMetingApi}
           autoplay={autoPlay}
           order={siteConfig('MUSIC_PLAYER_ORDER')}
           server={siteConfig('MUSIC_PLAYER_METING_SERVER')}
