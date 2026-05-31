@@ -90,7 +90,7 @@ const FloatingToc = ({ toc }) => {
       <div 
         className={`transition-all duration-300 ease-out ${
           isExpanded 
-            ? 'w-64 bg-[#f7f9fe] border border-[var(--endspace-border-base)] shadow-lg rounded-xl' 
+            ? 'w-64 bg-[var(--endspace-bg-primary)] text-[var(--endspace-text-primary)] border border-[var(--endspace-border-base)] shadow-lg rounded-xl'
             : 'w-10'
         }`}
         style={{
@@ -103,7 +103,7 @@ const FloatingToc = ({ toc }) => {
           className={`flex items-center justify-center transition-all duration-300 shadow-md cursor-pointer border hover:-translate-y-1 hover:shadow-lg relative group rounded-full ${
             isExpanded 
               ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46] absolute -left-10 top-0' 
-              : 'w-10 h-10 bg-white text-gray-400 border-gray-200 hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46]'
+              : 'w-10 h-10 bg-[var(--endspace-bg-primary)] text-[var(--endspace-text-muted)] border-[var(--endspace-border-base)] hover:bg-[var(--endspace-accent-yellow)] hover:text-black hover:border-[var(--endspace-accent-yellow)]'
           }`}
           title={isExpanded ? 'Collapse TOC' : 'Expand TOC'}
         >
@@ -148,7 +148,7 @@ const FloatingToc = ({ toc }) => {
                       href={`#${id}`}
                       className={`block py-1 text-xs transition-all duration-200 hover:translate-x-1 ${
                         isActive 
-                          ? 'text-black font-bold' 
+                          ? 'text-[var(--endspace-text-primary)] font-bold'
                           : 'text-[var(--endspace-text-secondary)] hover:text-[var(--endspace-text-primary)]'
                       }`}
                       style={{ 

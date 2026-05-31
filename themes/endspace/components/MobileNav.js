@@ -146,7 +146,7 @@ export const MobileNav = (props) => {
   return (
     <>
       {/* Top Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 md:hidden bg-white border-b border-[var(--endspace-border-base)] safe-area-top">
+      <nav className="relative z-50 md:hidden bg-[var(--endspace-bg-base)] border-b border-[var(--endspace-border-base)] safe-area-top">
         <div className="flex items-center justify-between h-20 px-5">
           {/* Left: Avatar */}
           <SmartLink href="/" title="Profile" className="flex-shrink-0 flex items-center">
@@ -162,7 +162,7 @@ export const MobileNav = (props) => {
           {/* Right: Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-14 h-14 flex items-center justify-center text-[var(--endspace-text-primary)] hover:text-[#d4d4d8] transition-colors"
+            className="w-14 h-14 flex items-center justify-center text-[var(--endspace-text-primary)] hover:text-[var(--endspace-accent-yellow)] transition-colors"
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? (
@@ -176,7 +176,8 @@ export const MobileNav = (props) => {
 
       {/* Full Screen Menu Overlay */}
       <div 
-        className={`fixed inset-0 z-40 md:hidden bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+        data-testid='endspace-mobile-menu-backdrop'
+        className={`fixed top-20 left-0 right-0 bottom-0 z-40 md:hidden bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
           isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsMenuOpen(false)}
@@ -184,7 +185,8 @@ export const MobileNav = (props) => {
 
       {/* Slide-in Menu Panel */}
       <div 
-        className={`fixed top-20 left-0 right-0 bottom-0 z-40 md:hidden bg-white transition-transform duration-300 ease-out overflow-y-auto ${
+        data-testid='endspace-mobile-menu-panel'
+        className={`fixed top-20 left-0 right-0 bottom-0 z-40 md:hidden bg-[var(--endspace-bg-base)] transition-transform duration-300 ease-out overflow-y-auto ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -196,12 +198,12 @@ export const MobileNav = (props) => {
             const isOpen = openSubMenu === itemKey
             const itemClassName = `flex items-center gap-4 py-3 w-full transition-all group ${
               activeTab === item.name
-                ? 'text-black font-bold'
-                : 'text-[var(--endspace-text-secondary)] hover:text-black'
+                ? 'text-[var(--endspace-text-primary)] font-bold'
+                : 'text-[var(--endspace-text-secondary)] hover:text-[var(--endspace-text-primary)]'
             }`
             const itemContent = (
               <>
-                <div className={`transition-colors ${activeTab === item.name ? 'text-black' : 'text-gray-400 group-hover:text-black'}`}>
+                <div className={`transition-colors ${activeTab === item.name ? 'text-[var(--endspace-text-primary)]' : 'text-[var(--endspace-text-muted)] group-hover:text-[var(--endspace-text-primary)]'}`}>
                   {item.icon ? <i className={item.icon} /> : renderIcon(item.name)}
                 </div>
                 <span className="text-xl font-medium">{item.name}</span>
@@ -240,9 +242,9 @@ export const MobileNav = (props) => {
                         key={`${subMenu.name}-${subMenu.path}`}
                         href={subMenu.path}
                         target={subMenu.target || item.target}
-                        className='flex items-center gap-3 py-2 text-base text-[var(--endspace-text-secondary)] transition-colors hover:text-black'
+                        className='flex items-center gap-3 py-2 text-base text-[var(--endspace-text-secondary)] transition-colors hover:text-[var(--endspace-text-primary)]'
                       >
-                        <span className='w-4 text-center text-gray-400'>
+                        <span className='w-4 text-center text-[var(--endspace-text-muted)]'>
                           {subMenu.icon ? <i className={subMenu.icon} /> : renderIcon(subMenu.name)}
                         </span>
                         <span>{subMenu.name}</span>
@@ -270,7 +272,7 @@ export const MobileNav = (props) => {
                   handleEmailClick(e, emailIcon, CONTACT_EMAIL)
                 }
                 title='email'
-                className='flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] transition-colors hover:bg-[#d4d4d8] hover:text-[var(--endspace-text-primary)]'
+                className='flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] transition-colors hover:bg-[var(--endspace-bg-tertiary)] hover:text-[var(--endspace-text-primary)]'
                 ref={emailIcon}>
                 <MailFillIcon size={16} />
               </a>
@@ -285,7 +287,7 @@ export const MobileNav = (props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={social.label}
-                  className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-[var(--endspace-text-primary)] hover:bg-[#d4d4d8] transition-colors"
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-[var(--endspace-text-primary)] hover:bg-[var(--endspace-bg-tertiary)] transition-colors"
                 >
                   {renderSocialIcon(social.key, social.svg, social.label)}
                 </a>
@@ -294,9 +296,6 @@ export const MobileNav = (props) => {
           </div>
         </div>
       </div>
-
-      {/* Top spacer for content */}
-      <div className="h-20 md:hidden" />
     </>
   )
 }
