@@ -5,6 +5,7 @@ import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { EndspacePlayer } from './EndspacePlayer'
+import EndspaceSearchButton from './EndspaceSearchButton'
 import { buildMenuItems, isMenuItemActive } from './menu'
 import {
   IconMenu2,
@@ -70,7 +71,7 @@ const SocialIconComponents = {
 export const MobileNav = (props) => {
   const router = useRouter()
   const { siteInfo } = useGlobal()
-  const { customNav, customMenu } = props
+  const { customNav, customMenu, searchModal } = props
   const [activeTab, setActiveTab] = useState('Home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openSubMenu, setOpenSubMenu] = useState(null)
@@ -159,18 +160,22 @@ export const MobileNav = (props) => {
             </div>
           </SmartLink>
 
-          {/* Right: Hamburger Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-14 h-14 flex items-center justify-center text-[var(--endspace-text-primary)] hover:text-[var(--endspace-accent-yellow)] transition-colors"
-            aria-label="Toggle Menu"
-          >
-            {isMenuOpen ? (
-              <IconX size={28} stroke={1.5} />
-            ) : (
-              <IconMenu2 size={28} stroke={1.5} />
-            )}
-          </button>
+          <div className="flex items-center gap-1">
+            <EndspaceSearchButton searchModal={searchModal} variant='mobile' />
+
+            {/* Right: Hamburger Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="w-14 h-14 flex items-center justify-center text-[var(--endspace-text-primary)] hover:text-[var(--endspace-accent-yellow)] transition-colors"
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? (
+                <IconX size={28} stroke={1.5} />
+              ) : (
+                <IconMenu2 size={28} stroke={1.5} />
+              )}
+            </button>
+          </div>
         </div>
       </nav>
 

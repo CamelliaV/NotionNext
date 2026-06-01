@@ -9,6 +9,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import BlogListArchive from './components/BlogListArchive'
@@ -31,6 +32,11 @@ import CONFIG from './config'
 import { Style } from './style'
 import { IconLoader2 } from '@tabler/icons-react'
 
+const AlgoliaSearchModal = dynamic(
+  () => import('@/components/AlgoliaSearchModal'),
+  { ssr: false }
+)
+
 /**
  * Endspace Theme - Endfield Style
  * Base layout framework
@@ -51,6 +57,8 @@ const LayoutBase = (props) => {
 
   // Loading animation
   const LOADING_COVER = siteConfig('ENDSPACE_LOADING_COVER', true, CONFIG)
+  const searchModal = useRef(null)
+  const hasAlgoliaSearch = siteConfig('ALGOLIA_APP_ID')
 
   // Viewport scale - Endfield style (using hook default params: 1920x1080 landscape / 390x844 portrait)
   useViewportScale()
@@ -93,10 +101,10 @@ const LayoutBase = (props) => {
       {LOADING_COVER && <LoadingCover />}
 
       {/* Left vertical navigation (desktop) */}
-      <SideNav {...props} />
+      <SideNav {...props} searchModal={searchModal} />
 
       {/* Mobile bottom navigation */}
-      <MobileNav {...props} />
+      <MobileNav {...props} searchModal={searchModal} />
 
       {/* Main content area - using flex layout for sticky footer */}
       <div className="md:ml-[5rem] flex flex-col min-h-screen">
@@ -145,6 +153,9 @@ const LayoutBase = (props) => {
 
         {/* Floating Controls (Unified) */}
         <FloatingControls toc={toc} {...props} />
+
+        {/* Full-text search modal for Algolia-backed search */}
+        {hasAlgoliaSearch && <AlgoliaSearchModal cRef={searchModal} {...props} />}
       </div>
     </div>
   )
