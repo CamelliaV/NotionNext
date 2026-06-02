@@ -26,6 +26,7 @@
 
 # local agent rules
 /AGENTS.md
+/docs/plans/
 
 # debug
 npm-debug.log*
