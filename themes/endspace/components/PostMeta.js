@@ -10,6 +10,11 @@ import { IconClock, IconRefresh, IconFolder, IconFileText } from '@tabler/icons-
 export const PostMeta = ({ post }) => {
   if (!post) return null
 
+  const hasValue = value => value !== undefined && value !== null && value !== ''
+  const hasReadTime = hasValue(post.readTime)
+  const hasWordCount = hasValue(post.wordCount)
+  const showReadingStats = hasReadTime || hasWordCount
+
   return (
     <div className="mb-10 w-full">
       {/* Header Block */}
@@ -53,11 +58,15 @@ export const PostMeta = ({ post }) => {
                 </div>
             )}
 
-            {/* Reading Time / Count */}
-            <div className="flex items-center gap-2">
-                <IconFileText size={14} stroke={1.5} className="text-[var(--endspace-text-muted)]" />
-                <span>{post.wordCount || '-'} CHARS</span>
-            </div>
+            {/* Reading Stats */}
+            {showReadingStats && (
+                <div className="flex items-center gap-2">
+                    <IconFileText size={14} stroke={1.5} className="text-[var(--endspace-text-muted)]" />
+                    {hasReadTime && <span>READ {post.readTime} MIN</span>}
+                    {hasReadTime && hasWordCount && <span className="text-[var(--endspace-text-muted)]">/</span>}
+                    {hasWordCount && <span>COUNT {post.wordCount}</span>}
+                </div>
+            )}
 
             {/* Tags - Minimalist Pills */}
             {post.tags && post.tags.length > 0 && (
