@@ -11,7 +11,15 @@ export const PostMeta = ({ post }) => {
   if (!post) return null
 
   const hasValue = value => value !== undefined && value !== null && value !== ''
-  const hasReadTime = hasValue(post.readTime)
+  const wordCountValue = Number(post.wordCount)
+  const fallbackReadTime = Number.isFinite(wordCountValue)
+    ? Math.floor(wordCountValue / 400) + 1
+    : null
+  const estimatedReadTime =
+    hasValue(post.readTime) || !hasValue(post.wordCount)
+      ? post.readTime
+      : fallbackReadTime
+  const hasReadTime = hasValue(estimatedReadTime)
   const hasWordCount = hasValue(post.wordCount)
   const showReadingStats = hasReadTime || hasWordCount
 
@@ -62,7 +70,7 @@ export const PostMeta = ({ post }) => {
             {showReadingStats && (
                 <div className="flex items-center gap-2">
                     <IconFileText size={14} stroke={1.5} className="text-[var(--endspace-text-muted)]" />
-                    {hasReadTime && <span>READ {post.readTime} MIN</span>}
+                    {hasReadTime && <span>READ {estimatedReadTime} MIN</span>}
                     {hasReadTime && hasWordCount && <span className="text-[var(--endspace-text-muted)]">/</span>}
                     {hasWordCount && <span>COUNT {post.wordCount}</span>}
                 </div>
