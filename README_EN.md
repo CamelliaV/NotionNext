@@ -1,110 +1,128 @@
-# Free Installation and Usage Guide
+<div align="center">
 
-Click here to access the help documentation: NotionNext Help Manual - (Completely Free)
-
-## Rights Statement
-
-This project's tutorial is a free and open resource intended solely for personal learning use. It is strictly prohibited for any individual or organization to use this tutorial for commercial purposes, including but not limited to direct sales, indirect charges, or any other forms of profit. When reproducing, copying, or sharing this tutorial, the author's information must be retained, and the source clearly cited.
-
-This project only offers paid consultation services authorized by the author's team. Please be vigilant against fraud. Any unauthorized paid services may be subject to legal risks.
-
-You can set up your personal website in just a few minutes. Here is the link to my free tutorial:
+<img src="https://github.com/user-attachments/assets/c111204d-2016-4343-92e4-83357cac4b19" width="96" height="96" alt="NotionNext Logo" />
 
 # NotionNext
 
+CamelliaV/NotionNext fork
+
+This fork is based on upstream [notionnext-org/NotionNext](https://github.com/notionnext-org/NotionNext). It is currently maintained around the `endspace` theme, with a focus on the reading, navigation, and interaction experience of a personal blog.
+
 <p>
-  <a aria-label="GitHub commit activity" href="https://github.com/notionnext-org/NotionNext/commits/main" title="GitHub commit activity">
-    <img src="https://img.shields.io/github/commit-activity/m/notionnext-org/NotionNext?style=for-the-badge"/>
+  <a href="https://github.com/CamelliaV/NotionNext">Fork repository</a>
+  ·
+  <a href="https://github.com/notionnext-org/NotionNext">Upstream repository</a>
+  ·
+  <a href="https://preview.tangly1024.com/">Upstream theme preview</a>
+  ·
+  <a href="https://notionnext.tangly1024.com/">Upstream docs</a>
+  ·
+  <a href="https://github.com/notionnext-org/NotionNext/discussions">Upstream discussions</a>
+</p>
+
+<p>
+  <a aria-label="GitHub commit activity" href="https://github.com/CamelliaV/NotionNext/commits/main" title="GitHub commit activity">
+    <img src="https://img.shields.io/github/commit-activity/m/CamelliaV/NotionNext?style=for-the-badge"/>
   </a>
-  <a aria-label="GitHub contributors" href="https://github.com/notionnext-org/NotionNext/graphs/contributors" title="GitHub contributors">
-    <img src="https://img.shields.io/github/contributors/notionnext-org/NotionNext?color=orange&style=for-the-badge"/>
+  <a aria-label="GitHub contributors" href="https://github.com/CamelliaV/NotionNext/graphs/contributors" title="GitHub contributors">
+    <img src="https://img.shields.io/github/contributors/CamelliaV/NotionNext?color=orange&style=for-the-badge"/>
   </a>
   <a aria-label="Build status" href="#" title="Build status">
-    <img src="https://img.shields.io/github/deployments/notionnext-org/NotionNext/Production?logo=Vercel&style=for-the-badge"/>
+    <img src="https://img.shields.io/github/deployments/CamelliaV/NotionNext/Production?logo=Vercel&style=for-the-badge"/>
   </a>
   <a aria-label="Powered by Vercel" href="https://vercel.com?utm_source=Craigary&utm_campaign=oss" title="Powered by Vercel">
     <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" height="28"/>
   </a>
 </p>
 
+[中文](./README.md) | English
 
-[中文文档](./README.md) | README in English
+</div>
 
-<hr/>
+---
 
-A static blog system built with NextJS and Notion API, deployed on Vercel. Designed for Notion and all creators.
+## What Is NotionNext?
 
-**Repository hosting:** The main repository is maintained by the GitHub organization **[notionnext-org](https://github.com/notionnext-org)** (canonical: `https://github.com/notionnext-org/NotionNext`). Contributions are welcome; see the org page for collaboration. If you cloned before the transfer, run `git remote set-url origin https://github.com/notionnext-org/NotionNext.git` and verify with `git remote -v`.
+NotionNext is an open-source site system built with **Next.js + Notion API**. You keep managing posts, categories, tags, menus, and pages in Notion, while NotionNext publishes that content as an independent website.
 
-## Community
+It is useful for creators who want a long-term writing and publishing workflow: bloggers, indie developers, designers, photographers, course authors, open-source maintainers, and small teams building product sites or knowledge bases.
 
-| | |
-| --- | --- |
-| **Participate** | [community-participate.md](./docs/user-guide/community-participate.md) · [Discussions](https://github.com/notionnext-org/NotionNext/discussions) |
-| **Contributing** | [CONTRIBUTING.md](./CONTRIBUTING.md) |
-| **Governance** | [GOVERNANCE.md](./GOVERNANCE.md) · [MAINTAINERS.md](./MAINTAINERS.md) |
-| **Code of Conduct** | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
-| **Docs site** | [notionnext.tangly1024.com](https://notionnext.tangly1024.com) |
+## What This Fork Changes
 
-## 3-Minute Quick Start
+This fork keeps NotionNext's multi-theme foundation, but its current priority is a personal blog experience built around `endspace`.
+
+- **`endspace` as the default theme**: local development uses `NEXT_PUBLIC_THEME=endspace` in `.env.local`.
+- **Enhanced endspace post metadata**: post pages show reading time and word count; when only word count is available, reading time is estimated at 400 words per minute.
+- **More direct navigation and search**: endspace has a standalone search entry plus refinements to post pages, top navigation, and mobile behavior.
+- **Bottom-right floating controls**: dark mode toggle, TOC, Recent Logs, comment jump, and back-to-top are grouped in one compact control area.
+- **Image loading experience**: image skeleton loading and endspace-specific Notion image handling make page loading feel steadier.
+- **Music player adjustments**: the player keeps the blog atmosphere while fitting the current site behavior better.
+- **Developer workflow improvements**: theme parsing and local cache cleanup reduce stale states when switching themes or debugging locally.
+
+## Relationship With Upstream
+
+- The upstream canonical repository is [notionnext-org/NotionNext](https://github.com/notionnext-org/NotionNext).
+- This fork syncs upstream changes when needed, but it does not try to mirror every upstream commit immediately.
+- Changes in this fork are biased toward a personal-site experience, especially the `endspace` theme, and may not all be suitable for upstream.
+- For general installation, deployment, theme configuration, and community support, prefer the upstream documentation and discussions.
+
+## Local Development
+
+This repository requires Node `>=20 <25`. Node 20 from `.nvmrc` and Yarn 1 are recommended. If Yarn is not available, npm also works for local development.
 
 ```bash
-# 1) Use Node 20 (nvm recommended)
+# 1. Use Node 20
 nvm use || nvm install
 
-# 2) Install Yarn if needed
+# 2. Recommended: install Yarn 1 and start locally
 npm i -g yarn
-
-# 3) Install dependencies and start dev server
 yarn
 yarn dev
+
+# 3. If Yarn is not available, use npm
+npm install
+npm run dev
+```
+
+The local default theme comes from `.env.local`:
+
+```bash
+NEXT_PUBLIC_THEME=endspace
 ```
 
 Common commands:
 
-- Local development: `yarn dev`
-- Production build: `yarn build`
-- Static export: `yarn export`
+| Purpose | Yarn | npm |
+| --- | --- | --- |
+| Local development | `yarn dev` | `npm run dev` |
+| Production build | `yarn build` | `npm run build` |
+| Static export | `yarn export` | `npm run export` |
+| Preview docs locally | `yarn docs:site:dev` | `npm run docs:site:dev` |
+| Build docs site | `yarn docs:site:build` | `npm run docs:site:build` |
 
-Note: local workflow stays simple (`yarn`), while lockfile consistency is enforced in CI.
+## Upstream Docs
 
-## Developer Docs Navigation
+| Content | Link |
+| --- | --- |
+| Docs site | [notionnext.tangly1024.com](https://notionnext.tangly1024.com) |
+| Getting started | [Start here](https://notionnext.tangly1024.com/user-guide/start-here) |
+| Theme catalog | [THEMES_CATALOG](https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG) |
+| Source docs | [docs/](./docs/) |
+| Discussions | [GitHub Discussions](https://github.com/notionnext-org/NotionNext/discussions) |
 
-To help new contributors get started quickly, the project keeps docs bilingual with clear entry points:
+## Technologies
 
-- [Docs index (中文)](./docs/README.md)
-- [Developer docs (English)](./docs/developer/README.en.md)
-- [Contribution (中文)](./CONTRIBUTING.zh-CN.md)
-- [Contribution Guide (English)](./CONTRIBUTING.md)
-
-## Themes & preview
-
-- **Live theme switcher**: [preview.tangly1024.com](https://preview.tangly1024.com/)
-- **All 25 themes**: [THEMES_CATALOG.md](./docs/user-guide/themes/THEMES_CATALOG.md)
-- New theme? See [CONTRIBUTING.md](./CONTRIBUTING.md) and [Theme Migration Guide](./docs/developer/THEME_MIGRATION_GUIDE.md)
+- **Framework**: [Next.js](https://nextjs.org)
+- **Styles**: [Tailwind CSS](https://www.tailwindcss.cn/)
+- **Rendering**: [react-notion-x](https://github.com/NotionX/react-notion-x)
+- **Comments**: Twikoo, Giscus, Gitalk, Cusdis, Utterances
+- **Deployment**: [Vercel](https://vercel.com)
 
 ## Acknowledgements
 
-Special thanks to Craig Hart for initiating the Nobelium project.
-
-<table><tr align="left">
-  <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://github.com/craigary" title="Craig Hart">Craig Hart</a></td>
-</tr></table>
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
+Thanks to Craig Hart for initiating the Nobelium project, and to the upstream NotionNext contributors for the foundation this fork builds on.
 
 [![Contributors](https://contrib.rocks/image?repo=notionnext-org/NotionNext)](https://github.com/notionnext-org/NotionNext/graphs/contributors)
-
-## Technologies Used
-
-- **Technical Framework**: [Next.js](https://nextjs.org)
-- **Styles**: [Tailwind CSS](https://www.tailwindcss.cn/)
-- **Rendering Tool**: [React-notion-x](https://github.com/NotionX/react-notion-x)
-- **COMMENT**: [Twikoo](https://github.com/imaegoo/twikoo), [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
-- **ICON**: [Fontawesome](https://fontawesome.com/v6/icons/)
-
 
 ## License
 
