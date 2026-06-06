@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { siteConfig } from '@/lib/config'
-import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
+import {
+  getGmailComposeUrl,
+  resolveContactEmail
+} from '@/lib/plugins/mailEncrypt'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { EndspacePlayer } from './EndspacePlayer'
@@ -75,7 +78,6 @@ export const MobileNav = (props) => {
   const [activeTab, setActiveTab] = useState('Home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openSubMenu, setOpenSubMenu] = useState(null)
-  const emailIcon = useRef(null)
   
   // Get avatar from props or global context
   const avatarUrl = props?.siteInfo?.icon || siteInfo?.icon || siteConfig('AVATAR')
@@ -101,6 +103,8 @@ export const MobileNav = (props) => {
   ]
 
   const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
+  const contactEmail = resolveContactEmail(CONTACT_EMAIL)
+  const contactEmailHref = contactEmail ? getGmailComposeUrl(contactEmail) : ''
 
   useEffect(() => {
     const path = router.asPath
@@ -271,14 +275,12 @@ export const MobileNav = (props) => {
         <div className="px-6 pb-8">
           <div className="flex items-center gap-3 flex-wrap">
             {/* Email */}
-            {CONTACT_EMAIL && (
+            {contactEmailHref && (
               <a
-                onClick={e =>
-                  handleEmailClick(e, emailIcon, CONTACT_EMAIL)
-                }
+                href={contactEmailHref}
                 title='email'
                 className='flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] transition-colors hover:bg-[var(--endspace-bg-tertiary)] hover:text-[var(--endspace-text-primary)]'
-                ref={emailIcon}>
+              >
                 <MailFillIcon size={16} />
               </a>
             )}
