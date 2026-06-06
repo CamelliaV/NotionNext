@@ -15,14 +15,32 @@ import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { SideBar } from './SideBar'
 
-const getPublishTimestamp = post => {
-  const value = post?.publishDate || post?.publishDay
+const getRecentLogTimestamp = post => {
+  const value =
+    post?.lastEditedDate ||
+    post?.lastEditedDay ||
+    post?.publishDate ||
+    post?.publishDay
   if (!value) return 0
 
   const timestamp =
     typeof value === 'number' ? value : new Date(value).getTime()
 
   return Number.isFinite(timestamp) ? timestamp : 0
+}
+
+const formatRecentLogDay = post => {
+  if (post?.lastEditedDay) return post.lastEditedDay
+  if (post?.publishDay) return post.publishDay
+
+  const value = post?.lastEditedDate || post?.publishDate
+  if (!value) return ''
+
+  const timestamp =
+    typeof value === 'number' ? value : new Date(value).getTime()
+  if (!Number.isFinite(timestamp)) return ''
+
+  return new Date(timestamp).toLocaleDateString('zh-CN')
 }
 
 /**
@@ -36,14 +54,11 @@ const FloatingControls = ({ toc, ...props }) => {
     () =>
       (props.allNavPages || props.allPages || props.latestPosts || [])
         .filter(post => post?.slug)
-        .sort((a, b) => getPublishTimestamp(b) - getPublishTimestamp(a))
+        .slice()
+        .sort((a, b) => getRecentLogTimestamp(b) - getRecentLogTimestamp(a))
         .map(post => ({
           ...post,
-          publishDay:
-            post.publishDay ||
-            (post.publishDate
-              ? new Date(post.publishDate).toLocaleDateString('zh-CN')
-              : '')
+          publishDay: formatRecentLogDay(post)
         })),
     [props.allNavPages, props.allPages, props.latestPosts]
   )

@@ -8,6 +8,7 @@ import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
 const baseLayoutCache = new Map()
 const layoutByThemeCache = new Map()
+const shouldCacheThemeLayouts = process.env.NODE_ENV !== 'development' || isBrowser
 let domFixTimer = null
 
 const MagzineLayoutLoading = () => (
@@ -111,6 +112,16 @@ const getCurrentTheme = (router, fallbackTheme) => {
   return normalizeThemeName(fallbackTheme || BLOG.THEME)
 }
 
+const resolveLayoutComponent = ({ componentsSource, layoutName, themeQuery }) => {
+  const Selected = componentsSource[layoutName] || componentsSource.LayoutSlug
+  if (!Selected) {
+    throw new Error(
+      `[theme] Layout "${layoutName}" missing in themes/${themeQuery}`
+    )
+  }
+  return Selected
+}
+
 /**
  * 加载全局布局
  * @param {*} theme
@@ -118,7 +129,7 @@ const getCurrentTheme = (router, fallbackTheme) => {
  */
 export const getBaseLayoutByTheme = theme => {
   const normalizedTheme = normalizeThemeName(theme)
-  if (baseLayoutCache.has(normalizedTheme)) {
+  if (shouldCacheThemeLayouts && baseLayoutCache.has(normalizedTheme)) {
     return baseLayoutCache.get(normalizedTheme)
   }
   const DynamicBaseLayout = dynamic(
@@ -134,7 +145,9 @@ export const getBaseLayoutByTheme = theme => {
       }),
     { ssr: true }
   )
-  baseLayoutCache.set(normalizedTheme, DynamicBaseLayout)
+  if (shouldCacheThemeLayouts) {
+    baseLayoutCache.set(normalizedTheme, DynamicBaseLayout)
+  }
   return DynamicBaseLayout
 }
 
@@ -159,26 +172,30 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
   const themeQuery = getCurrentTheme(router, theme)
   const cacheKey = `${themeQuery}:${layoutName}`
 
-  if (layoutByThemeCache.has(cacheKey)) {
+  if (shouldCacheThemeLayouts && layoutByThemeCache.has(cacheKey)) {
     scheduleFixThemeDOM(themeQuery === BLOG.THEME ? 80 : 240)
     return layoutByThemeCache.get(cacheKey)
   }
 
-  const DynamicLayoutComponent = dynamic(
-    () =>
-      import(`@/themes/${themeQuery}`).then(componentsSource => {
-        const Selected =
-          componentsSource[layoutName] || componentsSource.LayoutSlug
-        if (!Selected) {
-          throw new Error(
-            `[theme] Layout "${layoutName}" missing in themes/${themeQuery}`
-          )
-        }
-        return Selected
-      }),
-    { ssr: true, loading: getLayoutLoading(themeQuery, layoutName) }
-  )
-  layoutByThemeCache.set(cacheKey, DynamicLayoutComponent)
+  const layoutLoading = getLayoutLoading(themeQuery, layoutName)
+  const DynamicLayoutComponent = layoutLoading
+    ? dynamic(
+        () =>
+          import(`@/themes/${themeQuery}`).then(componentsSource =>
+            resolveLayoutComponent({ componentsSource, layoutName, themeQuery })
+          ),
+        { ssr: true, loading: layoutLoading }
+      )
+    : dynamic(
+        () =>
+          import(`@/themes/${themeQuery}`).then(componentsSource =>
+            resolveLayoutComponent({ componentsSource, layoutName, themeQuery })
+          ),
+        { ssr: true }
+      )
+  if (shouldCacheThemeLayouts) {
+    layoutByThemeCache.set(cacheKey, DynamicLayoutComponent)
+  }
   scheduleFixThemeDOM(themeQuery === BLOG.THEME ? 80 : 240)
   return DynamicLayoutComponent
 }
