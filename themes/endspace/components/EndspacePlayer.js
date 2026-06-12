@@ -39,10 +39,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
   const metingEnabled = siteConfig('MUSIC_PLAYER_METING')
   const metingServer = siteConfig('MUSIC_PLAYER_METING_SERVER')
   const metingId = siteConfig('MUSIC_PLAYER_METING_ID')
-  const metingApi = siteConfig(
-    'MUSIC_PLAYER_METING_API',
-    'https://api.injahow.cn/meting/?server=netease&type=playlist&id=12927716304'
-  )
+  const metingApi = siteConfig('MUSIC_PLAYER_METING_API', '/api/meting')
   const playOrder = siteConfig('MUSIC_PLAYER_ORDER')
   const fallbackCover = siteConfig('AVATAR') || '/avatar.svg'
   const configuredAudioList = siteConfig('MUSIC_PLAYER_AUDIO_LIST')

@@ -1,18 +1,15 @@
-const DEFAULT_METING_API = 'https://api.injahow.cn/meting/'
+// Same-origin route that proxies the music platform server-side. Public Meting
+// gateways (api.injahow.cn et al.) have been returning empty responses, so we
+// host the playlist lookup ourselves. See pages/api/meting.js.
+const DEFAULT_METING_API = '/api/meting'
 
 export const buildMetingPlaylistUrl = ({ server, id, api = DEFAULT_METING_API }) => {
-  const url = new URL(api)
-  if (!url.searchParams.has('server')) {
-    url.searchParams.set('server', server || 'netease')
-  }
-  if (!url.searchParams.has('type')) {
-    url.searchParams.set('type', 'playlist')
-  }
-  if (!url.searchParams.has('id')) {
-    url.searchParams.set('id', id || '')
-  }
+  const params = new URLSearchParams()
+  params.set('server', server || 'netease')
+  params.set('type', 'playlist')
+  params.set('id', id || '')
 
-  return url.toString()
+  return `${api}?${params.toString()}`
 }
 
 export const normalizeMetingAudioList = songs => {
