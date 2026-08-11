@@ -9,7 +9,7 @@
 | 主题 | 使用文档 | 实现文档 |
 | --- | --- | --- |
 | Claude | [claude.md](../../user-guide/themes/claude.md) | [CLAUDE.md](./CLAUDE.md) · [CLAUDE.en.md](./CLAUDE.en.md) |
-| Endspace | [endspace.md](../../user-guide/themes/endspace.md) | [ENDSPACE.md](./ENDSPACE.md) · [ENDSPACE.en.md](./ENDSPACE.en.md) |
+| Endspace | [endspace.md](../../user-guide/themes/endspace.md) | [ENDSPACE.md](./ENDSPACE.md) · [ENDSPACE.en.md](./ENDSPACE.en.md) · [音乐播放器代理](./ENDSPACE_MUSIC_PLAYER.md) |
 | Fuwari | [fuwari.md](../../user-guide/themes/fuwari.md) | [FUWARI.md](./FUWARI.md) |
 | HEO | [heo.md](../../user-guide/themes/heo.md) | [HEO.md](./HEO.md) |
 | Proxio | [proxio.md](../../user-guide/themes/proxio.md) | [PROXIO.md](./PROXIO.md) |

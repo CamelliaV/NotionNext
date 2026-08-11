@@ -31,3 +31,4 @@ Endspace 是受《明日方舟：终末地》官网视觉风格启发的 NotionN
 
 - 与 [主题迁移指南](../THEME_MIGRATION_GUIDE.zh-CN.md) 对齐：菜单、暗色模式、评论、TOC 等应走 NotionNext 全局约定。
 - 上游 `theme` 分支为单一主题包；若上游更新，建议以目录为单位对比合并。
+- 音乐播放器歌单走**自托管 Meting 代理**（`pages/api/meting.js`），不依赖公共网关。取数链路与故障定位见 [Endspace 音乐播放器维护文档](./ENDSPACE_MUSIC_PLAYER.md)。
