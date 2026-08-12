@@ -1,4 +1,4 @@
-# 全站功能与配置索引（4.9.5.x）
+# 全站功能与配置索引（4.10.2）
 
 配置源文件：`blog.config.js` 聚合 `conf/*.config.js`。环境变量多为 `NEXT_PUBLIC_<键名>`（服务端专用键无此前缀，见各文件注释）。
 
@@ -16,7 +16,7 @@
 | `PSEUDO_STATIC` | URL 以 `.html` 结尾 |
 | `ENABLE_RSS` | RSS 生成 |
 | `CUSTOM_MENU` | 使用 Menu/SubMenu 导航 |
-| `CAN_COPY` | 是否允许复制正文 |
+| `CAN_COPY` | 是否允许复制正文；文章可用 `CAN_COPY` 或 `ext.CAN_COPY` 单独覆盖 |
 | `GREETING_WORDS` | 欢迎语打字（部分主题） |
 | `LAYOUT_SIDEBAR_REVERSE` | 侧栏左右反转（hexo/next 等） |
 | `UUID_REDIRECT` | UUID 重定向到 slug |
@@ -90,6 +90,7 @@
 | `MUSIC_PLAYER_*` | APlayer / Meting，见 [plugins/music-player.md](../plugins/music-player.md) |
 | `WIDGET_PET` / `WIDGET_PET_LINK` | Live2D 宠物 |
 | `CHATBASE_ID` | Chatbase |
+| `AI_CHAT_*` | OpenAI 兼容 AI 助手，支持 DeepSeek 等模型服务 |
 | `WEB_WHIZ_*` | Webwhiz 机器人 |
 | `DIFY_CHATBOT_*` | Dify 嵌入 |
 | `FACEBOOK_PAGE_*` | Facebook Page / Messenger |
@@ -123,7 +124,7 @@
 | `PRISM_THEME_*` | 高亮主题、深浅切换 |
 | `CODE_MAC_BAR` | Mac 窗口三色点 |
 | `CODE_LINE_NUMBERS` | 行号 |
-| `CODE_COLLAPSE` | 折叠长代码 |
+| `CODE_COLLAPSE` | 折叠长代码，桌面端支持侧栏预览 |
 | `MERMAID_CDN` | Mermaid 图表 |
 
 ## 广告（conf/ad.config.js）
@@ -175,7 +176,13 @@
 
 ## 联系方式（conf/contact.config.js）
 
-`CONTACT_EMAIL`、`CONTACT_GITHUB`、`CONTACT_TWITTER` 等，值填 URL；部分主题侧栏展示。
+`CONTACT_EMAIL`、`CONTACT_GITHUB`、`CONTACT_TWITTER` 等配置用于在主题的个人资料区或侧栏显示站长联系方式。
+
+| 配置键 | 环境变量 | 说明                                                                |
+| --- | --- |-------------------------------------------------------------------|
+| `CONTACT_ORCID` | `NEXT_PUBLIC_CONTACT_ORCID` | ORCID 主页完整 URL，例如 `https://orcid.org/1234-1234-1234-1234`。留空时不显示。 |
+
+支持读取 Notion Config 中的同名键 `CONTACT_ORCID`，配置优先级为 Notion Config、环境变量、本地配置文件。
 
 ## 右键菜单（conf/right-click-menu.js）
 

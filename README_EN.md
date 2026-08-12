@@ -8,6 +8,7 @@ CamelliaV/NotionNext fork
 
 This fork is based on upstream [notionnext-org/NotionNext](https://github.com/notionnext-org/NotionNext). It is currently maintained around the `endspace` theme, with a focus on the reading, navigation, and interaction experience of a personal blog.
 
+
 <p>
   <a href="https://github.com/CamelliaV/NotionNext">Fork repository</a>
   ·
@@ -68,10 +69,10 @@ This fork keeps NotionNext's multi-theme foundation, but its current priority is
 
 ## Local Development
 
-This repository requires Node `>=20 <25`. Node 20 from `.nvmrc` and Yarn 1 are recommended. If Yarn is not available, npm also works for local development.
+Use Node 22 and Yarn 1. Node 20 cannot install the current dependency set because `@ai-sdk/google` requires Node >=22.
 
 ```bash
-# 1. Use Node 20
+# 1. Use Node 22
 nvm use || nvm install
 
 # 2. Recommended: install Yarn 1 and start locally

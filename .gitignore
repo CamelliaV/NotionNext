@@ -47,6 +47,12 @@ yarn-error.log*
 # dev
 /data.json
 /pnpm-lock.yaml
+.codex-temp/
+.codex-remote-attachments/
+.codex-*.md
+tmp-followup-*.md
+notionnext-*-comment.txt
+output/
 .idea
 .vscode
 
@@ -66,3 +72,6 @@ package-lock.json
 .perf/
 tsconfig.tsbuildinfo
 webpack-internal:/
+
+# Local Cloudflare Worker route configuration
+/cloudflare/notion-image-proxy/wrangler.toml

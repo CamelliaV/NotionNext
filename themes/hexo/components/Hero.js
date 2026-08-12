@@ -47,7 +47,8 @@ const Hero = props => {
   const categoryCount = props?.categoryOptions?.length || 0
 
   const scrollToWrapper = () => {
-    window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize)
+    window.scrollTo({ top: wrapperTop - 2 * rem, behavior: 'smooth' })
   }
 
   useEffect(() => {
