@@ -110,12 +110,12 @@ export const Style = () => {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         overflow-x: hidden;
         /* Custom Tech Cursor - Sharp Spearhead with Heavy Shadow */
-        cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L12 28 L16 18 L26 14 L2 2 Z' fill='%2318181b' stroke='%23ffffff' stroke-width='1.5' style='filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));'/%3E%3C/svg%3E") 2 2, auto;
+        cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http:%2F%2Fwww.w3.org%2F2000%2Fsvg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L12 28 L16 18 L26 14 L2 2 Z' fill='%2318181b' stroke='%23ffffff' stroke-width='1.5' style='filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));'/%3E%3C/svg%3E") 2 2, auto;
       }
 
       #theme-endspace a, #theme-endspace button, #theme-endspace [role="button"], #theme-endspace .cursor-pointer {
         /* Pointer Cursor - Target Reticle Style */
-        cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L12 28 L16 18 L26 14 L2 2 Z' fill='%2362F0F5' stroke='%23000000' stroke-width='1.5' style='filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));'/%3E%3Ccircle cx='24' cy='24' r='4' fill='none' stroke='%2362F0F5' stroke-width='2'/%3E%3C/svg%3E") 2 2, pointer;
+        cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http:%2F%2Fwww.w3.org%2F2000%2Fsvg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L12 28 L16 18 L26 14 L2 2 Z' fill='%2362F0F5' stroke='%23000000' stroke-width='1.5' style='filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));'/%3E%3Ccircle cx='24' cy='24' r='4' fill='none' stroke='%2362F0F5' stroke-width='2'/%3E%3C/svg%3E") 2 2, pointer;
       }
 
       /* Technical Grid Background */
@@ -321,14 +321,13 @@ export const Style = () => {
       #theme-endspace #notion-article .notion-property-title,
       #theme-endspace #notion-article .notion-simple-table,
       #theme-endspace #notion-article .notion-table,
-      #theme-endspace #notion-article .notion-code,
-      #theme-endspace #notion-article .notion-equation {
+#theme-endspace #notion-article .notion-equation {
         color: var(--endspace-text-primary) !important;
       }
 
       #theme-endspace #notion-article p,
       #theme-endspace #notion-article li,
-      #theme-endspace #notion-article span,
+      #theme-endspace #notion-article span:not([class*='token']),
       #theme-endspace #notion-article figcaption,
       #theme-endspace #notion-article .notion-text,
       #theme-endspace #notion-article .notion-list,
@@ -341,6 +340,80 @@ export const Style = () => {
       #theme-endspace #notion-article .notion-simple-table-cell {
         color: var(--endspace-text-secondary) !important;
       }
+
+      /* ============================================
+         Code Syntax Highlighting (Prism tokens)
+         基础色板对齐 prism-mac-style.css 暗底补丁,
+         并叠加 endspace 黄色点缀;特异性需压过上方
+         #theme-endspace #notion-article 的 !important 重置
+         ============================================ */
+      #theme-endspace #notion-article .notion-code {
+        background: #18181b !important;
+      }
+      #theme-endspace #notion-article .notion-code code,
+      #theme-endspace #notion-article .notion-code {
+        color: #e4e4e7 !important;
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular,
+          Menlo, monospace;
+      }
+      #theme-endspace #notion-article .notion-code .token.comment,
+      #theme-endspace #notion-article .notion-code .token.prolog,
+      #theme-endspace #notion-article .notion-code .token.doctype,
+      #theme-endspace #notion-article .notion-code .token.cdata {
+        color: rgba(235, 235, 245, 0.46) !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.punctuation {
+        color: rgba(235, 235, 245, 0.6) !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.property,
+      #theme-endspace #notion-article .notion-code .token.tag,
+      #theme-endspace #notion-article .notion-code .token.boolean,
+      #theme-endspace #notion-article .notion-code .token.number,
+      #theme-endspace #notion-article .notion-code .token.constant,
+      #theme-endspace #notion-article .notion-code .token.symbol,
+      #theme-endspace #notion-article .notion-code .token.deleted {
+        color: #7ee787 !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.selector,
+      #theme-endspace #notion-article .notion-code .token.attr-name,
+      #theme-endspace #notion-article .notion-code .token.string,
+      #theme-endspace #notion-article .notion-code .token.char,
+      #theme-endspace #notion-article .notion-code .token.builtin,
+      #theme-endspace #notion-article .notion-code .token.inserted {
+        color: #a5d6ff !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.atrule,
+      #theme-endspace #notion-article .notion-code .token.attr-value,
+      #theme-endspace #notion-article .notion-code .token.keyword {
+        color: var(--endspace-accent-yellow) !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.function,
+      #theme-endspace #notion-article .notion-code .token.class-name {
+        color: #d2a8ff !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.regex,
+      #theme-endspace #notion-article .notion-code .token.important,
+      #theme-endspace #notion-article .notion-code .token.variable {
+        color: #ffa657 !important;
+      }
+      #theme-endspace #notion-article .notion-code .token.operator,
+      #theme-endspace #notion-article .notion-code .token.entity,
+      #theme-endspace #notion-article .notion-code .token.url {
+        color: #79c0ff !important;
+      }
+
+      /* 行内代码 - 延续主题黄点缀 + 灰底 */
+      #theme-endspace #notion-article .notion-inline-code,
+      #theme-endspace #notion-article code.notion-inline-code {
+        background: var(--endspace-bg-tertiary);
+        color: var(--endspace-accent-yellow) !important;
+        padding: 0.15em 0.4em;
+        border-radius: 3px;
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular,
+          Menlo, monospace;
+        font-size: 0.9em;
+      }
+
 
       #theme-endspace #notion-article h1,
       #theme-endspace #notion-article h2,
