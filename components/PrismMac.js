@@ -586,12 +586,47 @@ export const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
       parent.insertBefore(collapseWrapper, codeBlock)
       panel.appendChild(codeBlock)
 
+      let clearMaxHeightTimer = null
+
       function setExpanded(expanded) {
         panelWrapper.classList.toggle('is-expanded', expanded)
         panel.classList.toggle('is-expanded', expanded)
         header.setAttribute('aria-expanded', expanded ? 'true' : 'false')
-        panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px'
+
+        clearTimeout(clearMaxHeightTimer)
+
+        if (expanded) {
+          // Seed the expand animation with the current content height; it is
+          // cleared to `none` afterwards so later font/Prism layout changes
+          // cannot leave a stale pixel cap that clips the last lines.
+          panel.style.maxHeight = `${panel.scrollHeight}px`
+          // A freshly mounted panel has no previous computed height, so the
+          // transition may not run at all; do not rely on transitionend alone.
+          clearMaxHeightTimer = setTimeout(() => {
+            if (panelWrapper.classList.contains('is-expanded')) {
+              panel.style.maxHeight = 'none'
+            }
+          }, 400)
+        } else {
+          // Expanded panels sit at `max-height: none`, so pin the rendered
+          // height first to give the collapse transition a concrete start.
+          const currentHeight = panel.getBoundingClientRect().height
+          panel.style.maxHeight = `${currentHeight}px`
+          void panel.offsetHeight
+          panel.style.maxHeight = '0px'
+        }
       }
+
+      // `.collapse-panel` clips with overflow: hidden, so an expanded panel
+      // must drop its measured max-height once the transition ends.
+      panel.addEventListener('transitionend', event => {
+        if (event.target !== panel || event.propertyName !== 'max-height') {
+          return
+        }
+        if (panelWrapper.classList.contains('is-expanded')) {
+          panel.style.maxHeight = 'none'
+        }
+      })
 
       header.addEventListener('click', () => {
         const expanded = panelWrapper.classList.contains('is-expanded')
